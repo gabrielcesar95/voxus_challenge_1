@@ -8,14 +8,12 @@ class Date:
     year: int
 
     def __init__(self, iso_date: str):
-        try:
-            self.validate_iso(iso_date)
-            splitted_date = iso_date.split('-')
-            self.year = int(splitted_date[0])
-            self.month = int(splitted_date[1])
-            self.day = int(splitted_date[2])
-        except ValidationException as e:
-            print(e.error)
+        self.validate_iso(iso_date)
+        
+        splitted_date = iso_date.split('-')
+        self.year = int(splitted_date[0])
+        self.month = int(splitted_date[1])
+        self.day = int(splitted_date[2])
 
 
     def validate_iso(self, iso_date: str) -> bool:
