@@ -10,7 +10,10 @@ class Date:
     def __init__(self, iso_date: str):
         try:
             self.validate_iso(iso_date)
-            #TODO: set day/month/year
+            splitted_date = iso_date.split('-')
+            self.year = int(splitted_date[0])
+            self.month = int(splitted_date[1])
+            self.day = int(splitted_date[2])
         except ValidationException as e:
             print(e.error)
 
@@ -31,24 +34,24 @@ class Date:
         if(subject_month < 1 or subject_month > 12):
             raise ValidationException('O mês deve ser um valor entre 1 e 12')
 
-        max_month_day = 29 if subject_month == 2 and self.is_leap_year(self, subject_year) else self._month_days[subject_month-1]
+        max_month_day = 29 if subject_month == 2 and self.is_leap_year(subject_year) else self._month_days[subject_month-1]
 
         if(subject_day < 0 or subject_day > max_month_day):
             raise ValidationException('O dia para o mês solicitado deve ser um valor entre 1 e {}'.format(max_month_day))
         
         return True
-    
-    def is_leap_year(self, year: int) -> bool:
-        return year%4 == 0 and (year%100 != 0 or year%400 == 0)
         
-    def get_year_day(self) -> int:
-        #TODO: get year day from set day/month/year attrs
-        
+    def get_year_day(self) -> int:        
         # Lógica:
         # - 1. Considerando o ano, verificar se é bissexto.
         # - 1.1. Caso seja, considerar o valor de _month_days[1] como 29
+        self._month_days[1] = 29 if self.is_leap_year(self.year) else 28
         # - 2. Somar:
         # - 2.1. Totais de _month_days até o mês anterior ao atual
+        previous_months_sum = sum(self._month_days[0:self.month-1])
         # - 2.1. valor de day 
-
-        pass
+        return previous_months_sum + self.day
+    
+    @staticmethod
+    def is_leap_year(year: int) -> bool:
+        return year%4 == 0 and (year%100 != 0 or year%400 == 0)

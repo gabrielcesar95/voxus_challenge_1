@@ -1,6 +1,10 @@
 # Created by https://www.toptal.com/developers/gitignore/api/venv,macos,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=venv,macos,visualstudiocode
 
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
 ### macOS ###
 # General
 .DS_Store
